@@ -1,4 +1,4 @@
-import { image } from 'framer-motion/client';
+
 import { useEffect, useRef, useState } from 'react';
 
 const certs = [
