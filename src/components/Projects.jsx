@@ -13,7 +13,7 @@ const projects = [
     accent: '#C6A969',
     link: 'https://github.com/rachithaeshan/internLink',
     year: '2026',
-    image: '/public/internlink.png',
+    image: '/internlink.png',
   },
   {
     id: '02',
@@ -25,7 +25,7 @@ const projects = [
     accent: '#335C4A',
     link: 'https://github.com/rachithaeshan/FinTrack',
     year: '2026',
-    image: '/public/finance.png',
+    image: '/finance.png',
   },
   {
     id: '03',
@@ -37,7 +37,7 @@ const projects = [
     accent: '#C6A969',
     link: 'https://github.com/rachithaeshan/CareLink',
     year: '2026',
-    image: '/public/carelink.png',
+    image: '/carelink.png',
   },
   {
     id: '04',
@@ -49,7 +49,7 @@ const projects = [
     accent: '#335C4A',
     link: 'https://github.com/rachithaeshan/AquaShield',
     year: '2026',
-    image: '/public/aqua.png',
+    image: '/aqua.png',
   },
   {
     id: '05',
@@ -60,7 +60,7 @@ const projects = [
     type: 'Enterprise App',
     accent: '#C6A969',
     year: '2025',
-    image: '/public/workpulse.png',
+    image: '/workpulse.png',
   },
   {
     id: '06',
@@ -72,7 +72,7 @@ const projects = [
     accent: '#335C4A',
     link: 'https://github.com/rachithaeshan/Wellora',
     year: '2025',
-    image: '/public/wellora1.png',
+    image: '/wellora1.png',
   },
 ];
 
