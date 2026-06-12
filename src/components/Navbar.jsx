@@ -7,7 +7,13 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
 
-    const sections = ['about', 'skills', 'projects', 'contact'];
+    const sections = [
+      'about',
+      'skills',
+      'projects',
+      'certifications',
+      'contact',
+    ];
 
     const observers = sections.map((id) => {
       const el = document.getElementById(id);
@@ -40,6 +46,7 @@ export default function Navbar() {
     { label: 'About', href: 'about' },
     { label: 'Skills', href: 'skills' },
     { label: 'Projects', href: 'projects' },
+    { label: 'Certifications', href: 'certifications' },
     { label: 'Contact', href: 'contact' },
   ];
 
@@ -57,6 +64,7 @@ export default function Navbar() {
         alignItems: 'center',
 
         padding: scrolled ? '1rem 4rem' : '1.5rem 4rem',
+        
 
         background: scrolled
           ? 'rgba(11,11,11,0.92)'

@@ -143,7 +143,7 @@ export default function Hero() {
           transition: 'all 0.8s ease 0.9s',
         }}>
           Software Engineering undergraduate at SLIIT, building full-stack systems that solve
-          real problems — from microservices to mobile apps. Passionate about clean architecture
+          real problems from microservices to mobile apps. Passionate about clean architecture
           and code that lasts.
         </p>
 

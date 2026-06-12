@@ -80,8 +80,8 @@ export default function Contact() {
                     fontSize: '0.85rem', color: 'rgba(248,246,240,0.6)', textDecoration: 'none',
                     transition: 'color 0.3s',
                   }}
-                  onMouseEnter={e => e.target.style.color = 'var(--ivory)'}
-                  onMouseLeave={e => e.target.style.color = 'rgba(248,246,240,0.6)'}>
+                    onMouseEnter={e => e.target.style.color = 'var(--ivory)'}
+                    onMouseLeave={e => e.target.style.color = 'rgba(248,246,240,0.6)'}>
                     {c.value}
                   </a>
                 ) : (
@@ -90,6 +90,42 @@ export default function Contact() {
               </div>
             ))}
           </div>
+          {/* Download CV Button */}
+          <a
+            href="/Rachitha_Eshan_Software_Engineer_Intern.pdf"
+            download
+            style={{
+              marginTop: '2.5rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              padding: '14px 28px',
+              border: '1px solid var(--gold)',
+              background: 'transparent',
+              color: 'var(--gold)',
+              textDecoration: 'none',
+              fontFamily: 'Space Mono',
+              fontSize: '0.65rem',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              transition: 'all 0.35s ease',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--gold)';
+              e.currentTarget.style.color = 'var(--bg)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = 'var(--gold)';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            ↓ Download CV
+          </a>
         </div>
 
         {/* Form */}

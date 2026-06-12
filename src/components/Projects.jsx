@@ -19,7 +19,7 @@ const projects = [
     id: '02',
     name: 'FinTrack',
     subtitle: 'Finance & Budget Management',
-    description: 'Personal finance web application with transaction management, budget tracking, category management, and a full admin dashboard — secured with JWT.',
+    description: 'Personal finance web application with transaction management, budget tracking, category management, and a full admin dashboard secured with JWT.',
     tech: ['Angular', 'Spring Boot', 'PostgreSQL', 'Maven'],
     type: 'Full-Stack',
     accent: '#335C4A',
@@ -72,7 +72,7 @@ const projects = [
     accent: '#335C4A',
     link: 'https://github.com/rachithaeshan/Wellora',
     year: '2025',
-    image: '/public/wellora.png',
+    image: '/public/wellora1.png',
   },
 ];
 
