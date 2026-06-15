@@ -5,6 +5,7 @@ export default function Contact() {
   const [visible, setVisible] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.2 });
@@ -12,9 +13,15 @@ export default function Contact() {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Mailto fallback
     const mailto = `mailto:rachithaeshan@gmail.com?subject=Portfolio Inquiry from ${form.name}&body=${encodeURIComponent(form.message + '\n\nFrom: ' + form.email)}`;
     window.open(mailto);
     setSent(true);
@@ -30,7 +37,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" ref={sectionRef} style={{ padding: '8rem 6rem', position: 'relative', overflow: 'hidden' }}>
+    <section id="contact" ref={sectionRef} style={{ padding: isMobile ? '5rem 1.5rem' : '8rem 6rem', position: 'relative', overflow: 'hidden' }}>
       {/* Background */}
       <div style={{
         position: 'absolute', top: '50%', left: '50%',
@@ -58,11 +65,11 @@ export default function Contact() {
           fontStyle: 'italic',
         }}>Something</span> Together
       </h2>
-      <p style={{ color: 'rgba(248,246,240,0.4)', marginBottom: '4rem', fontSize: '0.95rem', maxWidth: 500 }}>
+      <p style={{ color: 'rgba(248,246,240,0.4)', marginBottom: '3rem', fontSize: '0.95rem', maxWidth: 500 }}>
         Open to internships, collaborations, and conversations that lead somewhere interesting.
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '6rem', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1.5fr', gap: isMobile ? '3rem' : '6rem', alignItems: 'start' }}>
         {/* Contact info */}
         <div style={{
           opacity: visible ? 1 : 0, transform: visible ? 'translateX(0)' : 'translateX(-30px)',
@@ -78,7 +85,7 @@ export default function Contact() {
                 {c.href ? (
                   <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" style={{
                     fontSize: '0.85rem', color: 'rgba(248,246,240,0.6)', textDecoration: 'none',
-                    transition: 'color 0.3s',
+                    transition: 'color 0.3s', wordBreak: 'break-all',
                   }}
                     onMouseEnter={e => e.target.style.color = 'var(--ivory)'}
                     onMouseLeave={e => e.target.style.color = 'rgba(248,246,240,0.6)'}>
@@ -191,6 +198,7 @@ export default function Contact() {
                 fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase',
                 cursor: 'pointer', transition: 'all 0.3s ease',
                 alignSelf: 'flex-start',
+                width: isMobile ? '100%' : 'auto',
               }}
               onMouseEnter={e => { if (!sent) e.currentTarget.style.opacity = '0.8'; }}
               onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}

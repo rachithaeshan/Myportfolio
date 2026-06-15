@@ -168,6 +168,7 @@ function CertCard({ cert, index, visible }) {
 export default function Certifications() {
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.1 });
@@ -175,9 +176,16 @@ export default function Certifications() {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   return (
     <section id="certifications" ref={sectionRef} style={{
-      padding: '8rem 6rem',
+      padding: isMobile ? '5rem 1.5rem' : '8rem 6rem',
       background: 'linear-gradient(180deg, transparent, rgba(51,92,74,0.03), transparent)',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
@@ -193,14 +201,15 @@ export default function Certifications() {
       }}>
         Continuous <span style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Learning</span>
       </h2>
-      <p style={{ color: 'rgba(248,246,240,0.35)', marginBottom: '3.5rem', fontSize: '0.9rem' }}>
+      <p style={{ color: 'rgba(248,246,240,0.35)', marginBottom: '3rem', fontSize: '0.9rem' }}>
         Credentials that back the craft.
       </p>
 
       {/* Stats bar */}
       <div style={{
-        display: 'flex', gap: '2px', marginBottom: '3rem',
+        display: 'flex', gap: '2px', marginBottom: '2.5rem',
         opacity: visible ? 1 : 0, transition: 'opacity 0.8s ease 0.3s',
+        overflowX: 'auto',
       }}>
         {[
           { label: 'Academic', count: 1, color: '#C6A969' },
@@ -213,6 +222,7 @@ export default function Certifications() {
             flex: cat.count, background: cat.color,
             height: 4, position: 'relative',
             transition: `all 1s ease ${i * 0.1 + 0.5}s`,
+            minWidth: 20,
           }}>
             <div style={{
               position: 'absolute', top: 8, left: 0,
@@ -226,7 +236,7 @@ export default function Certifications() {
       {/* Cards grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
         gap: '1px',
         background: 'rgba(198,169,105,0.06)',
         position: 'relative',
@@ -239,7 +249,7 @@ export default function Certifications() {
             <CertCard cert={cert} index={i} visible={visible} />
           </div>
         ))}
-        {certs.length % 2 !== 0 && (
+        {certs.length % 2 !== 0 && !isMobile && (
           <div style={{ background: 'var(--bg)' }} />
         )}
       </div>

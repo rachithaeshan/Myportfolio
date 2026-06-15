@@ -113,6 +113,7 @@ function SkillBadge({ skill, delay, visible }) {
 export default function Skills() {
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.1 });
@@ -120,8 +121,15 @@ export default function Skills() {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   return (
-    <section id="skills" ref={sectionRef} style={{ padding: '8rem 6rem', position: 'relative' }}>
+    <section id="skills" ref={sectionRef} style={{ padding: isMobile ? '5rem 1.5rem' : '8rem 6rem', position: 'relative' }}>
       <div style={{
         position: 'absolute', top: 0, right: 0, bottom: 0, left: 0,
         background: 'radial-gradient(ellipse 60% 50% at 80% 50%, rgba(51,92,74,0.05) 0%, transparent 70%)',
@@ -141,7 +149,7 @@ export default function Skills() {
       }}>
         Technical <span style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Stack</span>
       </h2>
-      <p style={{ color: 'rgba(248,246,240,0.35)', marginBottom: '4rem', fontSize: '0.9rem' }}>
+      <p style={{ color: 'rgba(248,246,240,0.35)', marginBottom: '3rem', fontSize: '0.9rem' }}>
         The tools I wield to build meaningful software.
       </p>
 
@@ -149,14 +157,15 @@ export default function Skills() {
         {skillGroups.map((group, gi) => (
           <div key={group.category} style={{
             display: 'grid',
-            gridTemplateColumns: '200px 1fr',
+            gridTemplateColumns: isMobile ? '1fr' : '200px 1fr',
             borderBottom: '1px solid rgba(198,169,105,0.08)',
-            minHeight: 90,
+            minHeight: isMobile ? 'auto' : 90,
           }}>
             {/* Category label */}
             <div style={{
-              padding: '1.8rem 2rem',
-              borderRight: '1px solid rgba(198,169,105,0.08)',
+              padding: isMobile ? '1.2rem 0 0.5rem' : '1.8rem 2rem',
+              borderRight: isMobile ? 'none' : '1px solid rgba(198,169,105,0.08)',
+              borderBottom: isMobile ? '1px solid rgba(198,169,105,0.06)' : 'none',
               display: 'flex', alignItems: 'center', gap: '12px',
               opacity: visible ? 1 : 0,
               transform: visible ? 'translateX(0)' : 'translateX(-20px)',
@@ -170,7 +179,7 @@ export default function Skills() {
 
             {/* Skills */}
             <div style={{
-              padding: '1.5rem 2rem',
+              padding: isMobile ? '1rem 0 1.2rem' : '1.5rem 2rem',
               display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center',
             }}>
               {group.skills.map((skill, si) => (

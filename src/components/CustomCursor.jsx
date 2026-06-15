@@ -1,12 +1,26 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function CustomCursor() {
   const cursorRef = useRef(null);
   const followerRef = useRef(null);
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
+    // Detect touch device — hide custom cursor on mobile/touch
+    const checkTouch = () => {
+      const touch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+      setIsTouch(touch);
+    };
+    checkTouch();
+  }, []);
+
+  useEffect(() => {
+    if (isTouch) return;
+
     const cursor = cursorRef.current;
     const follower = followerRef.current;
+    if (!cursor || !follower) return;
+
     let mouseX = 0, mouseY = 0;
     let followerX = 0, followerY = 0;
 
@@ -36,7 +50,9 @@ export default function CustomCursor() {
     setTimeout(addListeners, 500);
     animate();
     return () => document.removeEventListener('mousemove', onMouseMove);
-  }, []);
+  }, [isTouch]);
+
+  if (isTouch) return null;
 
   return (
     <>

@@ -204,6 +204,7 @@ function ProjectCard({ project, index, visible }) {
 export default function Projects() {
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.05 });
@@ -211,8 +212,15 @@ export default function Projects() {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   return (
-    <section id="projects" ref={sectionRef} style={{ padding: '8rem 6rem', position: 'relative' }}>
+    <section id="projects" ref={sectionRef} style={{ padding: isMobile ? '5rem 1.5rem' : '8rem 6rem', position: 'relative' }}>
       <div style={{
         position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)',
         width: '70%', height: '60%',
@@ -233,13 +241,13 @@ export default function Projects() {
       }}>
         What I've <span style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Built</span>
       </h2>
-      <p style={{ color: 'rgba(248,246,240,0.35)', marginBottom: '4rem', fontSize: '0.9rem', maxWidth: 500 }}>
+      <p style={{ color: 'rgba(248,246,240,0.35)', marginBottom: '3rem', fontSize: '0.9rem', maxWidth: 500 }}>
         A selection of projects spanning full-stack web, mobile, and cloud platforms.
       </p>
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
         gap: '1px',
         background: 'rgba(198,169,105,0.06)',
       }}>
