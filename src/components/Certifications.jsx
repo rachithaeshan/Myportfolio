@@ -23,6 +23,16 @@ const certs = [
     category: 'Programming',
   },
   {
+  name: 'C# and .NET Essential Training',
+  org: 'LinkedIn Learning',
+  year: '2026',
+  accent: '#0A66C2',
+  logo: '/linkedin-learning.png',
+  fallbackText: '.NET',
+  fallbackColor: '#512BD4',
+  category: 'Programming',
+},
+  {
     name: 'PostgreSQL: Become an SQL Developer',
     org: 'Udemy',
     year: '2024',
