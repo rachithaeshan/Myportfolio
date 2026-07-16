@@ -1,10 +1,32 @@
 import { useEffect, useRef, useState } from 'react';
 
-
-// Using real screenshot-style project images from Unsplash (tech/UI themed)
 const projects = [
   {
     id: '01',
+    name: 'TeamFlow',
+    subtitle: 'AI-Powered Project & Task Management',
+    description: 'Full-stack project management platform with Admin, PM, and Team Member RBAC. 30+ REST APIs, Google Gemini AI for project summaries and intelligent assistant, deployed with GitHub Actions CI/CD.',
+    tech: ['Next.js', 'Node.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Gemini AI'],
+    type: 'AI Platform',
+    accent: '#C6A969',
+    link: 'https://github.com/rachithaeshan/TeamFlow',
+    year: '2026',
+    image: '/taskflow.png',
+  },
+  {
+    id: '02',
+    name: 'TeamPulse',
+    subtitle: 'AI-Powered Meeting & Collaboration',
+    description: 'Full-stack team collaboration platform with meeting management, AI-generated summaries and reports via Google Gemini, and an AI-powered chat assistant built with Spring Boot and Next.js.',
+    tech: ['Spring Boot', 'Java', 'Next.js', 'PostgreSQL', 'Hibernate', 'Gemini AI'],
+    type: 'AI Platform',
+    accent: '#335C4A',
+    link: 'https://github.com/rachithaeshan/TeamPulse',
+    year: '2026',
+    image: '/teampulse.png',
+  },
+  {
+    id: '03',
     name: 'InternLink',
     subtitle: 'Internship & Placement Portal',
     description: 'Full-stack internship management platform with role-based access, JWT authentication, REST APIs, Excel report generation, and admin analytics dashboard.',
@@ -16,7 +38,7 @@ const projects = [
     image: '/internlink.png',
   },
   {
-    id: '02',
+    id: '04',
     name: 'FinTrack',
     subtitle: 'Finance & Budget Management',
     description: 'Personal finance web application with transaction management, budget tracking, category management, and a full admin dashboard secured with JWT.',
@@ -28,7 +50,7 @@ const projects = [
     image: '/finance.png',
   },
   {
-    id: '03',
+    id: '05',
     name: 'CareLink',
     subtitle: 'Smart Healthcare Platform',
     description: 'Cloud-native healthcare platform built with microservices — patient/doctor management, live video consultations via Agora, Twilio notifications, and an AI symptom checker.',
@@ -40,7 +62,7 @@ const projects = [
     image: '/carelink.png',
   },
   {
-    id: '04',
+    id: '06',
     name: 'AquaShield',
     subtitle: 'Illegal Fishing Reporter',
     description: 'Marine conservation platform for monitoring illegal fishing, managing protected species databases, and streamlining case handling with role-based access.',
@@ -52,7 +74,7 @@ const projects = [
     image: '/aqua.png',
   },
   {
-    id: '05',
+    id: '07',
     name: 'WORKPULSE',
     subtitle: 'Employee Management System',
     description: 'Full-stack hospital employee management system with automated role-based authentication and comprehensive account management features.',
@@ -63,7 +85,7 @@ const projects = [
     image: '/workpulse.png',
   },
   {
-    id: '06',
+    id: '08',
     name: 'Wellora',
     subtitle: 'Kotlin Mobile App',
     description: 'Android health monitoring app with local SQLite storage. Also built a companion meal suggestion app that tracks calories based on available groceries.',
@@ -76,7 +98,9 @@ const projects = [
   },
 ];
 
-function ProjectCard({ project, index, visible }) {
+const COLS = 3;
+
+function ProjectCard({ project, index, visible, isMobile }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -97,7 +121,7 @@ function ProjectCard({ project, index, visible }) {
       }}
     >
       {/* Project image */}
-      <div style={{ position: 'relative', height: 200, overflow: 'hidden', flexShrink: 0 }}>
+      <div style={{ position: 'relative', height: isMobile ? 180 : 200, overflow: 'hidden', flexShrink: 0 }}>
         <img
           src={project.image}
           alt={project.name}
@@ -112,7 +136,7 @@ function ProjectCard({ project, index, visible }) {
         {/* Overlay gradient */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: `linear-gradient(to bottom, rgba(11,11,11,0.2), rgba(11,11,11,0.7))`,
+          background: 'linear-gradient(to bottom, rgba(11,11,11,0.2), rgba(11,11,11,0.7))',
         }} />
         {/* ID badge */}
         <div style={{
@@ -184,7 +208,10 @@ function ProjectCard({ project, index, visible }) {
             opacity: hovered ? 1 : 0.4, transition: 'opacity 0.3s ease',
           }}>
             <span>View on GitHub</span>
-            <span style={{ transform: hovered ? 'translate(2px,-2px)' : 'translate(0,0)', transition: 'transform 0.3s ease' }}>↗</span>
+            <span style={{
+              transform: hovered ? 'translate(2px,-2px)' : 'translate(0,0)',
+              transition: 'transform 0.3s ease',
+            }}>↗</span>
           </div>
         )}
       </div>
@@ -207,7 +234,10 @@ export default function Projects() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.05 });
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold: 0.05 }
+    );
     if (sectionRef.current) obs.observe(sectionRef.current);
     return () => obs.disconnect();
   }, []);
@@ -219,8 +249,15 @@ export default function Projects() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
+  // How many filler cells needed to complete the last row
+  const remainder = projects.length % COLS;
+  const fillerCount = !isMobile && remainder !== 0 ? COLS - remainder : 0;
+
   return (
-    <section id="projects" ref={sectionRef} style={{ padding: isMobile ? '5rem 1.5rem' : '8rem 6rem', position: 'relative' }}>
+    <section id="projects" ref={sectionRef} style={{
+      padding: isMobile ? '5rem 1.5rem' : '8rem 6rem',
+      position: 'relative',
+    }}>
       <div style={{
         position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)',
         width: '70%', height: '60%',
@@ -229,7 +266,12 @@ export default function Projects() {
       }} />
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-        <span style={{ fontFamily: 'Space Mono', fontSize: '0.6rem', letterSpacing: '0.25em', color: 'var(--gold)', textTransform: 'uppercase' }}>03 — Selected Work</span>
+        <span style={{
+          fontFamily: 'Space Mono', fontSize: '0.6rem', letterSpacing: '0.25em',
+          color: 'var(--gold)', textTransform: 'uppercase',
+        }}>
+          03 — Selected Work
+        </span>
         <div className="gold-line" style={{ flex: 1, maxWidth: 80 }} />
       </div>
 
@@ -241,17 +283,33 @@ export default function Projects() {
       }}>
         What I've <span style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Built</span>
       </h2>
-      <p style={{ color: 'rgba(248,246,240,0.35)', marginBottom: '3rem', fontSize: '0.9rem', maxWidth: 500 }}>
+      <p style={{
+        color: 'rgba(248,246,240,0.35)', marginBottom: '3rem',
+        fontSize: '0.9rem', maxWidth: 500,
+      }}>
         A selection of projects spanning full-stack web, mobile, and cloud platforms.
       </p>
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+        gridTemplateColumns: isMobile ? '1fr' : `repeat(${COLS}, 1fr)`,
         gap: '1px',
         background: 'rgba(198,169,105,0.06)',
       }}>
-        {projects.map((p, i) => <ProjectCard key={p.id} project={p} index={i} visible={visible} />)}
+        {projects.map((p, i) => (
+          <ProjectCard
+            key={p.id}
+            project={p}
+            index={i}
+            visible={visible}
+            isMobile={isMobile}
+          />
+        ))}
+
+        {/* Fill remaining cells in last row with bg color so gold gap doesn't show */}
+        {Array.from({ length: fillerCount }).map((_, i) => (
+          <div key={`filler-${i}`} style={{ background: 'var(--bg)' }} />
+        ))}
       </div>
     </section>
   );
